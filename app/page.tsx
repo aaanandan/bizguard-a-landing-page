@@ -11,10 +11,11 @@ import { useForm } from "./contexts/FormContext";
 import { FormProvider } from "./contexts/FormContext";
 import ErrorBoundary from './components/ErrorBoundary';
 import VideoPlayer from './components/VideoPlayer';
+// import LoadingOverlay from './components/LoadingOverlay';
 
 // ----- HEADER -----
 
-const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void }> = ({ darkMode, setDarkMode }) => {
+const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void; onNavigate: (section: string) => void }> = ({ darkMode, setDarkMode, onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { setShowWaitlistModal, setShowSubscribeModal } = useForm();
 
@@ -69,7 +70,11 @@ const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void 
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={item.onClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(item.name.toLowerCase().replace(/\s/g, "-"));
+                  scrollToContact(e);
+                }}
                 className={`relative text-base font-medium group ${
                   darkMode ? "text-white" : "text-gray-700"
                 } hover:text-orange-500 transition-colors duration-300`}
@@ -138,7 +143,11 @@ const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void 
                 <li key={item.name}>
                     <Link
                     href={item.href}
-                    onClick={item.onClick}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate(item.name.toLowerCase().replace(/\s/g, "-"));
+                      scrollToContact(e);
+                    }}
                     className={`block text-base font-medium ${
                       darkMode ? "text-white" : "text-gray-700"
                     } hover:text-orange-500 transition-colors duration-300`}
@@ -220,7 +229,7 @@ const StaggeredCard: React.FC<CardProps & { index: number }> = ({
     switch(iconClass) {
       // Setup Stage - Business Mapping
       case "fas fa-map-marker-alt":
-        return (
+  return (
           <svg className="w-32 h-32" viewBox="0 0 100 100" fill="none" stroke="currentColor">
             {/* Knowledge Tree Structure */}
             <circle cx="50" cy="20" r="10" strokeWidth="4"/>
@@ -268,7 +277,7 @@ const StaggeredCard: React.FC<CardProps & { index: number }> = ({
             {/* Small accounting symbols */}
             <text x="44" y="55" className="text-sm" fill="currentColor">₹</text>
             <text x="55" y="70" className="text-sm" fill="currentColor">$</text>
-          </svg>
+                </svg>
         );
       // Comprehensive Setup
       case "fas fa-cogs":
@@ -476,7 +485,7 @@ const ThreePhaseIllustration: React.FC<{ phase: 'saas' | 'onprem' | 'device', da
             <path d="M25 50C25 35 38 35 40 35C40 20 55 20 60 25C70 15 90 25 85 45C95 45 95 65 85 65H30C20 65 20 50 25 50Z" strokeWidth="4"/>
             <rect x="35" y="55" width="30" height="15" rx="2" strokeWidth="3"/>
             <text x="40" y="66" className="text-xs" fill="currentColor">FREE</text>
-          </svg>
+              </svg>
         );
       // On-Premises - AI Accountant Employee
       case 'onprem':
@@ -860,9 +869,9 @@ const CTA: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
               >
                 Subscribe for Updates
               </AnimatedButton>
-            </div>
-          </div>
         </div>
+      </div>
+    </div>
       </div>
 
       {/* Rest of the modals remain unchanged */}
@@ -996,7 +1005,7 @@ const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
         darkMode={darkMode}
       >
         <form onSubmit={handleSubscribeSubmit} className="space-y-4">
-          <div>
+    <div>
             <label className={`block mb-2 ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
               Email
             </label>
@@ -1010,7 +1019,7 @@ const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
                   : "bg-white border-gray-300 text-gray-900"
               }`}
             />
-          </div>
+    </div>
             <button
             type="submit"
             disabled={submitStatus === 'loading'}
@@ -1032,12 +1041,23 @@ const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
 // ----- MAIN LANDING PAGE -----
 const BizGuardAILandingPage: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   // Simulate loading time or wait for resources
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000); // Show loading for 2 seconds
+
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   return (
     <ErrorBoundary>
       <FormProvider>
+        {/* {isLoading && <LoadingOverlay />} */}
         <div className={darkMode ? "bg-gray-900" : "bg-white"}>
-          <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+          <Header darkMode={darkMode} setDarkMode={setDarkMode} onNavigate={() => {}} />
           <Hero darkMode={darkMode} />
           <HowItWorks darkMode={darkMode} />
           <Features darkMode={darkMode} />

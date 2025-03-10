@@ -7,14 +7,14 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ darkMode }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleVideoError = () => {
-    setHasError(true);
-    setIsVideoPlaying(false);
+  const handlePlayClick = () => {
+    setIsVideoPlaying(true);
+    setIsLoading(true);
   };
 
-  if (hasError) {
+  if (isLoading) {
     return (
       <div className={`
         relative 
@@ -76,10 +76,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ darkMode }) => {
           
           <div 
             className="absolute inset-0 flex items-center justify-center cursor-pointer group"
-            onClick={() => setIsVideoPlaying(true)}
+            onClick={handlePlayClick}
           >
             <div className={`
-              w-16 h-16 mb-10 ml-2
+              w-16 h-16
               rounded-full 
               bg-black/50 
               backdrop-blur-sm
@@ -87,33 +87,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ darkMode }) => {
               transform
               transition-all duration-300
               group-hover:scale-110
-              group-hover:bg-grey-500/80
               ${darkMode ? 'shadow-lg shadow-orange-500/20' : 'shadow-lg shadow-black/20'}
             `}>
-              <i className={`
-                fas fa-play 
-                text-white 
-                text-2xl
-                transform 
-                translate-x-0.5
-                transition-transform duration-300
-                group-hover:scale-125
-              `}></i>
+              <i className="fas fa-play text-white text-2xl"></i>
             </div>
           </div>
         </div>
       ) : (
-        <video 
-          className="w-full h-full"
-          autoPlay 
-          controls
-          playsInline
-          onError={handleVideoError}
-          onEnded={() => setIsVideoPlaying(false)}
-        >
-          <source src="/BizGuard_AI_-_Explainer_video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/KDviwGO_mrY"
+          title="BizGuard AI Video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { event } from '../utils/gtag';
 
 interface Props {
   children: React.ReactNode;
@@ -21,7 +22,14 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    // Log additional error details and component stack trace
+    // Log to Google Analytics
+    event({
+      action: 'error',
+      category: 'Error Boundary',
+      label: `${error.name}: ${error.message}`,
+      value: 1
+    });
+    
     console.error('Error details:', {
       error: error,
       message: error.message,
