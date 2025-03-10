@@ -9,6 +9,8 @@ import MultiStepForm from "./components/MultiStepForm";
 // import { validateEmail, validatePhone, validateRequired } from './utils/validation';
 import { useForm } from "./contexts/FormContext";
 import { FormProvider } from "./contexts/FormContext";
+import ErrorBoundary from './components/ErrorBoundary';
+import VideoPlayer from './components/VideoPlayer';
 
 // ----- HEADER -----
 
@@ -770,12 +772,7 @@ const Footer = ({ darkMode }: { darkMode: boolean }) => {
                   <span className="mr-3">
                     <i className="fas fa-envelope"></i>
                   </span>
-                  <a 
-                    href="mailto:anandan.bsm@gmail.com"
-                    className="hover:text-orange-500 transition-colors duration-300"
-                  >
-                    anandan.bsm@gmail.com
-                  </a>
+                  <span>anandan.bsm@gmail.com</span>
                 </li>
                 <li className={`mb-3 flex items-center text-base ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
                   <span className="mr-3">
@@ -922,7 +919,6 @@ const CTA: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
 };
 
 const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const {
     submitStatus,
     showWaitlistModal,
@@ -946,83 +942,9 @@ const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
                 
                 {/* Video Section */}
                 <div className="w-full my-8 flex justify-center">
-                  <div className={`
-                    relative 
-                    w-[60%] 
-                    aspect-video 
-                    rounded-lg 
-                    overflow-hidden 
-                    flex 
-                    items-center 
-                    justify-center
-                    ${darkMode ? "bg-gray-800" : "bg-white"}
-                    border-2 
-                    ${darkMode ? "border-gray-700" : "border-gray-200"}
-                  `}>
-                    {!isVideoPlaying ? (
-                      // Thumbnail and Play Button Container
-                      <div className="relative w-full h-full">
-                        {/* Thumbnail Image */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <Image
-                            src="/bizguard-video-thumbnail.jpg"
-                            alt="BizGuard AI Video Preview"
-                            fill
-                            style={{ 
-                              objectFit: 'contain',
-                              objectPosition: 'center'
-                            }}
-                            className="p-2"
-                            priority
-                          />
-        </div>
-                        
-                        {/* Clickable Overlay with Play Button */}
-                        <div 
-                          className="absolute inset-0 flex items-center justify-center cursor-pointer group"
-                          onClick={() => setIsVideoPlaying(true)}
-                        >
-                          {/* Circular Play Button */}
-                          <div className={`
-                            w-16 h-16 mb-10 ml-2
-                            rounded-full 
-                            bg-black/50 
-                            backdrop-blur-sm
-                            flex items-center justify-center
-                            transform
-                            transition-all duration-300
-                            group-hover:scale-110
-                            group-hover:bg-grey-500/80
-                            ${darkMode ? 'shadow-lg shadow-orange-500/20' : 'shadow-lg shadow-black/20'}
-                          `}>
-                            <i className={`
-                              fas fa-play 
-                              text-white 
-                              text-2xl
-                              transform 
-                              translate-x-0.5
-                              transition-transform duration-300
-                              group-hover:scale-125
-                            `}></i>
-      </div>
-    </div>
-                      </div>
-                    ) : (
-                      // Video Player
-                      <video 
-                        className="w-full h-full"
-                        autoPlay 
-                        controls
-                        playsInline
-                        onEnded={() => {
-                          setIsVideoPlaying(false);
-                        }}
-                      >
-                        <source src="/BizGuard_AI_-_Explainer_video.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
-                  </div>
+                  <ErrorBoundary>
+                    <VideoPlayer darkMode={darkMode} />
+                  </ErrorBoundary>
                 </div>
 
                 <p className={`mb-12 text-base font-medium leading-relaxed ${darkMode ? "text-gray-200" : "text-gray-700"} sm:text-lg md:text-xl`}>
@@ -1112,18 +1034,20 @@ const BizGuardAILandingPage: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   return (
-    <FormProvider>
-      <div className={darkMode ? "bg-gray-900" : "bg-white"}>
-        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-        <Hero darkMode={darkMode} />
-        <HowItWorks darkMode={darkMode} />
-        <Features darkMode={darkMode} />
-        <Approach darkMode={darkMode} />
-        <FAQ darkMode={darkMode} />
-        <CTA darkMode={darkMode} />
-        <Footer darkMode={darkMode} />
-    </div>
-    </FormProvider>
+    <ErrorBoundary>
+      <FormProvider>
+        <div className={darkMode ? "bg-gray-900" : "bg-white"}>
+          <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+          <Hero darkMode={darkMode} />
+          <HowItWorks darkMode={darkMode} />
+          <Features darkMode={darkMode} />
+          <Approach darkMode={darkMode} />
+          <FAQ darkMode={darkMode} />
+          <CTA darkMode={darkMode} />
+          <Footer darkMode={darkMode} />
+        </div>
+      </FormProvider>
+    </ErrorBoundary>
   );
 };
 
