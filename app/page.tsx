@@ -772,7 +772,7 @@ const Footer = ({ darkMode }: { darkMode: boolean }) => {
                   <span className="mr-3">
                     <i className="fas fa-envelope"></i>
                   </span>
-                  <span>anandan.bsm@gmail.com</span>
+                  <span>anandan.bs@gmail.com</span>
                 </li>
                 <li className={`mb-3 flex items-center text-base ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
                   <span className="mr-3">
