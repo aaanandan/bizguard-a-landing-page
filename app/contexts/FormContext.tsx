@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState } from 'react';
 
 interface FormContextType {
   submitStatus: 'idle' | 'loading' | 'success' | 'error';
-  setSubmitStatus: (status: 'idle' | 'loading' | 'success' | 'error') => void;
   showWaitlistModal: boolean;
   setShowWaitlistModal: (show: boolean) => void;
   showSubscribeModal: boolean;
@@ -21,17 +20,13 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   const handleFormSubmit = async (data: any) => {
     try {
       setSubmitStatus('loading');
-      
       const response = await fetch('/api/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
       if (!response.ok) throw new Error('Submission failed');
-
       setSubmitStatus('success');
       setTimeout(() => {
         setSubmitStatus('idle');
@@ -50,17 +45,13 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
 
     try {
       setSubmitStatus('loading');
-      
       const response = await fetch('/api/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
 
       if (!response.ok) throw new Error('Subscription failed');
-
       setSubmitStatus('success');
       setTimeout(() => {
         setSubmitStatus('idle');
@@ -75,7 +66,6 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   return (
     <FormContext.Provider value={{
       submitStatus,
-      setSubmitStatus,
       showWaitlistModal,
       setShowWaitlistModal,
       showSubscribeModal,
@@ -88,10 +78,10 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useForm = () => {
+export function useForm() {
   const context = useContext(FormContext);
   if (context === undefined) {
     throw new Error('useForm must be used within a FormProvider');
   }
   return context;
-}; 
+} 

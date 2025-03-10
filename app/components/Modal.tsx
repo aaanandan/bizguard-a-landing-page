@@ -1,7 +1,7 @@
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
   children: React.ReactNode;
   darkMode: boolean;
 }
@@ -11,49 +11,52 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, darkMod
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
-      ></div>
+      />
       
       {/* Modal Content */}
       <div className={`
         relative 
         w-full 
-        max-w-2xl
-        p-5
+        max-w-2xl 
+        max-h-[90vh] 
+        overflow-y-auto 
         rounded-lg 
-        shadow-xl 
-        ${darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"}
+        p-6 
+        ${darkMode ? "bg-gray-800" : "bg-white"}
+        shadow-xl
       `}>
-        {/* Close Button */}
+        {/* Close button */}
         <button
           onClick={onClose}
           className={`
             absolute 
-            top-3 
-            right-3
-            p-1 
+            top-4 
+            right-4 
+            p-2 
             rounded-full 
-            hover:bg-opacity-80 
-            ${darkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}
+            hover:bg-gray-100 
+            ${darkMode ? "text-white hover:bg-gray-700" : "text-gray-600"}
+            z-50
           `}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        
+
         {/* Title */}
         {title && (
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold">{title}</h3>
-          </div>
+          <h2 className={`text-xl font-bold mb-4 ${darkMode ? "text-white" : "text-gray-900"}`}>
+            {title}
+          </h2>
         )}
-        
+
         {/* Content */}
-        <div className="pt-1">
+        <div className="mt-2">
           {children}
         </div>
       </div>

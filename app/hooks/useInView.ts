@@ -21,5 +21,5 @@ export function useInView<T extends HTMLElement = any>(options = {}): [RefObject
     };
   }, [options]);
 
-  return [elementRef, isInView];
+  return [elementRef as RefObject<T>, isInView];
 } 

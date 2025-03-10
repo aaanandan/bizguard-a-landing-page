@@ -567,34 +567,90 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
   }
 
   return (
-    <div className="relative">
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-500 opacity-10 rounded-full"></div>
-        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-orange-500 opacity-10 rounded-full"></div>
+    <div className={`
+      w-full 
+      max-h-[calc(90vh-4rem)] 
+      overflow-y-auto 
+      ${darkMode ? "bg-gray-800" : "bg-white"}
+    `}>
+      {/* Progress indicator - make it sticky */}
+      <div className={`
+        sticky 
+        top-0 
+        z-10 
+        p-4 
+        ${darkMode ? "bg-gray-800" : "bg-white"}
+        border-b 
+        ${darkMode ? "border-gray-700" : "border-gray-200"}
+      `}>
+        {/* Progress indicator content */}
+        <div className="flex justify-center mb-4">
+          {[1, 2, 3].map((stepNumber) => (
+            <div
+              key={stepNumber}
+              className={`w-2 h-2 mx-1 rounded-full ${
+                step >= stepNumber 
+                  ? 'bg-orange-500' 
+                  : darkMode 
+                    ? 'bg-gray-700' 
+                    : 'bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="flex justify-center mb-4">
-        {[1, 2, 3].map((stepNumber) => (
-          <div
-            key={stepNumber}
-            className={`w-2 h-2 mx-1 rounded-full ${
-              step >= stepNumber 
-                ? 'bg-orange-500' 
-                : darkMode 
-                  ? 'bg-gray-700' 
-                  : 'bg-gray-300'
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Form Content */}
-      <div className="space-y-6">
+      {/* Form content */}
+      <div className="p-4 space-y-4">
         <AnimatePresence mode="wait">
           {renderStep()}
         </AnimatePresence>
+      </div>
+
+      {/* Navigation buttons - make them sticky */}
+      <div className={`
+        sticky 
+        bottom-0 
+        z-10 
+        p-4 
+        ${darkMode ? "bg-gray-800" : "bg-white"}
+        border-t 
+        ${darkMode ? "border-gray-700" : "border-gray-200"}
+        flex 
+        justify-between 
+        space-x-4
+      `}>
+        {step > 1 && (
+          <button
+            onClick={prevStep}
+            className={`
+              px-4 
+              py-2 
+              rounded-lg 
+              ${darkMode ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-700"}
+              hover:opacity-90
+            `}
+          >
+            Back
+          </button>
+        )}
+        <button
+          onClick={step === 3 ? handleSubmit : nextStep}
+          disabled={!formData.name || !formData.ageGroup || !formData.profession}
+          className={`
+            px-4 
+            py-2 
+            rounded-lg 
+            bg-orange-500 
+            text-white 
+            hover:bg-orange-600
+            disabled:opacity-50 
+            disabled:cursor-not-allowed
+            ml-auto
+          `}
+        >
+          {step === 3 ? 'Submit' : 'Next'}
+        </button>
       </div>
     </div>
   );

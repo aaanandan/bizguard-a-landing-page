@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useForm } from './contexts/FormContext';
 
 // Header Component
@@ -212,7 +212,7 @@ const HowItWorks = ({ theme }) => {
             <ul className="mb-6 list-disc pl-6 text-gray-700">
               <li className="mb-2">Share key details about your teams, business policies, processes, and chart of accounts</li>
               <li className="mb-2">Build your knowledge tree that outlines every task the AI needs to learn</li>
-              <li className="mb-2">Define clear expectations for the AI's role and responsibilities</li>
+              <li className="mb-2">Define clear expectations for the AI&aposs role and responsibilities</li>
             </ul>
             <p className="font-medium text-gray-700">
               <span className="font-bold">Outcome:</span> A solid, tailored knowledge base that mirrors your exact operations.

@@ -6,31 +6,9 @@ import { useInView } from "./hooks/useInView";
 import AnimatedButton from "./components/AnimatedButton";
 import Modal from "./components/Modal";
 import MultiStepForm from "./components/MultiStepForm";
-import { validateEmail, validatePhone, validateRequired } from './utils/validation';
+// import { validateEmail, validatePhone, validateRequired } from './utils/validation';
 import { useForm } from "./contexts/FormContext";
 import { FormProvider } from "./contexts/FormContext";
-
-// ----- COLOR + THEME HELPERS -----
-const colorMap: Record<string, { text: string; border: string; bg: string }> = {
-  black: { text: "text-black", border: "border-black", bg: "bg-black" },
-  blue: { text: "text-blue-600", border: "border-blue-600", bg: "bg-blue-600" },
-  green: { text: "text-green-600", border: "border-green-600", bg: "bg-green-600" },
-  purple: { text: "text-purple-600", border: "border-purple-600", bg: "bg-purple-600" },
-  red: { text: "text-red-600", border: "border-red-600", bg: "bg-red-600" },
-};
-
-function getTextColor(theme: string, darkMode: boolean) {
-  if (!colorMap[theme]) return darkMode ? "text-white" : "text-black";
-  return darkMode ? "text-white" : colorMap[theme].text;
-}
-function getBorderColor(theme: string, darkMode: boolean) {
-  if (!colorMap[theme]) return darkMode ? "border-white" : "border-black";
-  return darkMode ? "border-white" : colorMap[theme].border;
-}
-function getBgColor(theme: string, darkMode: boolean) {
-  if (!colorMap[theme]) return darkMode ? "bg-gray-800" : "bg-black";
-  return darkMode ? "bg-gray-800" : colorMap[theme].bg;
-}
 
 // ----- HEADER -----
 interface ThemeProps {
@@ -38,7 +16,7 @@ interface ThemeProps {
   darkMode: boolean;
 }
 
-const Header: React.FC<ThemeProps & { setDarkMode: (val: boolean) => void; setTheme: (val: string) => void }> = ({ theme, darkMode, setDarkMode, setTheme }) => {
+const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void }> = ({ darkMode, setDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { setShowWaitlistModal, setShowSubscribeModal } = useForm();
 
@@ -80,7 +58,7 @@ const Header: React.FC<ThemeProps & { setDarkMode: (val: boolean) => void; setTh
                 priority
               />
             </div>
-            <h1 className={`text-xl font-bold ${darkMode ? "text-white" : getTextColor(theme, darkMode)} -ml-1`}>
+            <h1 className={`text-xl font-bold ${darkMode ? "text-white" : "text-gray-700"} -ml-1`}>
                 BizGuard AI
               </h1>
             </Link>
@@ -244,10 +222,19 @@ const StaggeredCard: React.FC<CardProps & { index: number }> = ({
     switch(iconClass) {
       // Setup Stage - Business Mapping
       case "fas fa-map-marker-alt":
-  return (
+        return (
           <svg className="w-32 h-32" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-            <path d="M50 10c-16.6 0-30 13.4-30 30 0 20 30 50 30 50s30-30 30-50c0-16.6-13.4-30-30-30z" strokeWidth="6"/>
-            <circle cx="50" cy="40" r="10" strokeWidth="6"/>
+            {/* Knowledge Tree Structure */}
+            <circle cx="50" cy="20" r="10" strokeWidth="4"/>
+            <path d="M50 30v10" strokeWidth="4"/>
+            <circle cx="30" cy="50" r="8" strokeWidth="4"/>
+            <circle cx="70" cy="50" r="8" strokeWidth="4"/>
+            <path d="M50 40l-20 10M50 40l20 10" strokeWidth="4"/>
+            <circle cx="20" cy="75" r="6" strokeWidth="4"/>
+            <circle cx="40" cy="75" r="6" strokeWidth="4"/>
+            <circle cx="60" cy="75" r="6" strokeWidth="4"/>
+            <circle cx="80" cy="75" r="6" strokeWidth="4"/>
+            <path d="M30 50l-10 25M30 50l10 25M70 50l-10 25M70 50l10 25" strokeWidth="4"/>
           </svg>
         );
       // Voice Training
@@ -272,9 +259,17 @@ const StaggeredCard: React.FC<CardProps & { index: number }> = ({
       case "fas fa-download":
         return (
           <svg className="w-32 h-32" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-            <path d="M30 50l20 20 20-20" strokeWidth="6"/>
-            <path d="M50 20v50" strokeWidth="6"/>
-            <path d="M20 80h60" strokeWidth="6"/>
+            {/* Briefcase with checkmark concept */}
+            {/* Briefcase */}
+            <path d="M25 40h50v35H25z" strokeWidth="4"/>
+            <path d="M40 40V30c0-5 20-5 20 0v10" strokeWidth="4"/>
+            
+            {/* Large checkmark */}
+            <path d="M35 55l10 10 20-20" strokeWidth="4"/>
+            
+            {/* Small accounting symbols */}
+            <text x="44" y="55" className="text-sm" fill="currentColor">₹</text>
+            <text x="55" y="70" className="text-sm" fill="currentColor">$</text>
           </svg>
         );
       // Comprehensive Setup
@@ -289,8 +284,13 @@ const StaggeredCard: React.FC<CardProps & { index: number }> = ({
       case "fas fa-chalkboard-teacher":
         return (
           <svg className="w-32 h-32" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-            <rect x="20" y="20" width="60" height="40" strokeWidth="6"/>
-            <path d="M40 80l20-20 20 20" strokeWidth="6"/>
+            {/* Person interacting with screen */}
+            <rect x="20" y="20" width="60" height="40" rx="2" strokeWidth="4"/> {/* Screen */}
+            <path d="M50 70v10" strokeWidth="4"/> {/* Stand */}
+            <path d="M35 80h30" strokeWidth="4"/> {/* Base */}
+            <circle cx="50" cy="40" r="8" strokeWidth="3"/> {/* Person head */}
+            <path d="M40 35l-10-10M60 35l10-10" strokeWidth="3"/> {/* Interactive waves */}
+            <path d="M35 45l-15 5M65 45l15 5" strokeWidth="3"/> {/* Interactive waves */}
           </svg>
         );
       // Real-Time Execution
@@ -348,7 +348,7 @@ const StaggeredCard: React.FC<CardProps & { index: number }> = ({
             </div>
           </div>
       {/* Title */}
-      <h3 className={`text-xl font-semibold mb-4 ${darkMode ? "text-white" : "text-gray-900"}`}>{title}</h3>
+      <h3 className={`text-xl font-semibold mb-4 text-center ${darkMode ? "text-white" : "text-gray-900"}`}>{title}</h3>
       <p className={`${darkMode ? "text-gray-300" : "text-gray-700"} text-justify`}>{description}</p>
         </div>
   );
@@ -367,19 +367,19 @@ const ServerIconClass = "fas fa-server";
 const LockIconClass = "fas fa-lock";
 
 // ----- HOW IT WORKS SECTION -----
-const HowItWorks: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const HowItWorks: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   return (
     <section id="how-it-works" className={`py-16 md:py-20 lg:py-28 ${darkMode ? "bg-gray-800" : "bg-white"}`}>
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : getTextColor(theme, darkMode)}`}>
+          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : "text-gray-700"}`}>
             How BizGuard AI Works
           </h2>
           </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <StaggeredCard 
             darkMode={darkMode} 
-            title="Setup Stage – Mapping Your Business" 
+            title="Setup - Map Your Business" 
             description="Start by sharing a complete overview of your organization. In this stage, you Share Key Details:
 Your teams, business policies, processes, daily operations, ongoing projects, and your unique chart of accounts.
 Build Your Knowledge Tree:
@@ -393,7 +393,7 @@ Outcome: A solid, tailored knowledge base that mirrors your exact operations.
           />
           <StaggeredCard 
             darkMode={darkMode} 
-            title="Training Stage – Interactive Voice Learning & Validation" 
+            title="Train - Interactive Learning" 
             description="Engage in live training sessions with BizGuard AI:
 
 Interactive Voice Sessions:
@@ -408,7 +408,7 @@ Outcome: A customized, in-depth understanding of your business processes."
           />
           <StaggeredCard 
             darkMode={darkMode} 
-            title="Ask Stage – Task Assignment & Execution" 
+            title="Ask - Task Assignment" 
             description="Once training is complete, move to active task execution:
 Interactive Task Assignment:
 Use voice commands or simple text messages to assign tasks. The AI confirms tasks on a dynamic UI canvas.
@@ -429,7 +429,7 @@ Outcome: A human-like AI that performs tasks accurately and efficiently, reducin
 };
 
 // ----- FEATURES SECTION -----
-const Features: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const Features: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   const [ref, isInView] = useInView<HTMLElement>();
   
   return (
@@ -439,7 +439,7 @@ const Features: React.FC<ThemeProps> = ({ theme, darkMode }) => {
     >
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : getTextColor(theme, darkMode)}`}>
+          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : "text-gray-700"}`}>
             Key Features & Benefits
           </h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -453,11 +453,11 @@ const Features: React.FC<ThemeProps> = ({ theme, darkMode }) => {
             <StaggeredCard 
               darkMode={darkMode} 
               title="Comprehensive Setup" 
-              description="Create a full knowledge tree that defines your business processes, daily operations, projects, and chart of accounts. Benefit: Tailored learning for precise task execution." 
+              description="Create a full knowledge tree that defines your business processes, daily operations, projects, and chart of accounts. Benefit: Deep, accurate understanding of your process and workflows." 
               iconClass={SettingsIconClass} 
               index={1} 
             />
-            <StaggeredCard darkMode={darkMode} title="Interactive Training" description="Engage in live voice sessions where you explain tasks (like navigating an accounting application) and validate details via an intuitive UI.Benefit: Deep, accurate understanding of your workflows without disruptions." iconClass={ChalkboardIconClass} index={2} />
+            <StaggeredCard darkMode={darkMode} title="Interactive Training" description="Engage in live voice sessions where you explain tasks (like navigating an accounting application) and validate details via an intuitive UI. Benefit: Tailored learning for precise task execution." iconClass={ChalkboardIconClass} index={2} />
             <StaggeredCard darkMode={darkMode} title="Real-Time Task Execution" description="Assign tasks via voice or text and watch the AI execute them with precision—updating books, monitoring compliance, and providing insights in real time. Benefit: Immediate operational efficiency and reduced reliance on manual processes." iconClass={LightningIconClass} index={3} />
             <StaggeredCard darkMode={darkMode} title="Flexible Deployment" description="Choose from a cloud-based SaaS solution, an on-premises deployment, or a dedicated offline AI device. Benefit: Scalable options that grow with your business needs." iconClass={ServerIconClass} index={4} />
             <StaggeredCard darkMode={darkMode} title="Robust Data Security" description="BizGuard AI is focused on complete data security and securely handling sensitive information, ensuring your data is safe within a secure digital vault." iconClass={LockIconClass} index={5} />
@@ -476,11 +476,11 @@ const ThreePhaseIllustration: React.FC<{ phase: 'saas' | 'onprem' | 'device', da
       case 'saas':
         return (
           <svg className="w-32 h-32" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-            <circle cx="50" cy="35" r="15" strokeWidth="6"/>
-            <path d="M25 85c0-20 50-20 50 0" strokeWidth="6"/>
-            <path d="M20 50h10M70 50h10" strokeWidth="6"/>
-            <path d="M35 20h30" strokeWidth="6"/>
-              </svg>
+            {/* Cloud with "Free" tag */}
+            <path d="M25 50C25 35 38 35 40 35C40 20 55 20 60 25C70 15 90 25 85 45C95 45 95 65 85 65H30C20 65 20 50 25 50Z" strokeWidth="4"/>
+            <rect x="35" y="55" width="30" height="15" rx="2" strokeWidth="3"/>
+            <text x="40" y="66" className="text-xs" fill="currentColor">FREE</text>
+          </svg>
         );
       // On-Premises - AI Accountant Employee
       case 'onprem':
@@ -522,12 +522,12 @@ const ThreePhaseIllustration: React.FC<{ phase: 'saas' | 'onprem' | 'device', da
   );
 };
 
-const Approach: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const Approach: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   return (
     <section id="approach" className={`py-16 md:py-20 lg:py-28 ${darkMode ? "bg-gray-900" : "bg-white"}`}>
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : getTextColor(theme, darkMode)}`}>
+          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : "text-gray-700"}`}>
             Our Three-Phase Approach
           </h2>
           <div className="mx-auto mb-16 max-w-[800px]">
@@ -580,7 +580,7 @@ interface FAQItem {
   question: string;
   answer: string;
 }
-const FAQ: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const FAQ: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const faqs: (FAQItem & { icon: string })[] = [
     {
@@ -668,7 +668,7 @@ const FAQ: React.FC<ThemeProps> = ({ theme, darkMode }) => {
     <section id="faq" className={`py-16 md:py-20 lg:py-28 ${darkMode ? "bg-gray-800" : "bg-gray-50"}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : getTextColor(theme, darkMode)}`}>
+          <h2 className={`mb-4 text-3xl font-bold sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : "text-gray-700"}`}>
             Frequently Asked Questions
             </h2>
           <p className={`text-base md:text-lg ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
@@ -698,7 +698,7 @@ const FAQ: React.FC<ThemeProps> = ({ theme, darkMode }) => {
 };
 
 // ----- FOOTER SECTION -----
-const Footer: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const Footer = ({ darkMode }: { darkMode: boolean }) => {
   return (
     <footer className={`relative z-10 pt-16 pb-10 lg:pt-24 lg:pb-10 ${darkMode ? "bg-gray-900" : "bg-white"}`}>
       <div className="container mx-auto px-4">
@@ -717,7 +717,7 @@ const Footer: React.FC<ThemeProps> = ({ theme, darkMode }) => {
                       className="scale-110"
                     />
                   </div>
-                  <h1 className={`text-2xl font-bold ${darkMode ? "text-white" : getTextColor(theme, darkMode)}`}>
+                  <h1 className={`text-2xl font-bold ${darkMode ? "text-white" : "text-gray-700"}`}>
                   BizGuard AI
                 </h1>
                 </div>
@@ -741,8 +741,8 @@ const Footer: React.FC<ThemeProps> = ({ theme, darkMode }) => {
                     >
                       {item}
                       <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </li>
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -822,7 +822,7 @@ const Footer: React.FC<ThemeProps> = ({ theme, darkMode }) => {
 };
 
 // ----- CTA SECTION -----
-const CTA: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const CTA: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   const {
     submitStatus,
     showWaitlistModal,
@@ -927,7 +927,7 @@ const CTA: React.FC<ThemeProps> = ({ theme, darkMode }) => {
   );
 };
 
-const Hero: React.FC<ThemeProps> = ({ theme, darkMode }) => {
+const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const {
     submitStatus,
@@ -946,7 +946,7 @@ const Hero: React.FC<ThemeProps> = ({ theme, darkMode }) => {
           <div className="flex flex-wrap -mx-4 mt-8">
             <div className="w-full px-4">
               <div className="mx-auto w-full text-center">
-                <h1 className={`mb-5 text-3xl font-bold leading-tight sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : getTextColor(theme, darkMode)}`}>
+                <h1 className={`mb-5 text-3xl font-bold leading-tight sm:text-4xl md:text-[45px] ${darkMode ? "text-white" : "text-gray-700"}`}>
                   Welcome to the Future of Accounting with BizGuard AI
                 </h1>
                 
@@ -1115,28 +1115,24 @@ const Hero: React.FC<ThemeProps> = ({ theme, darkMode }) => {
 
 // ----- MAIN LANDING PAGE -----
 const BizGuardAILandingPage: React.FC = () => {
-  const [theme, setTheme] = useState<string>("black");
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   return (
     <FormProvider>
       <div className={darkMode ? "bg-gray-900" : "bg-white"}>
-        <Header theme={theme} darkMode={darkMode} setDarkMode={setDarkMode} setTheme={setTheme} />
-        <Hero theme={theme} darkMode={darkMode} />
-        <HowItWorks theme={theme} darkMode={darkMode} />
-        <Features theme={theme} darkMode={darkMode} />
-        <Approach theme={theme} darkMode={darkMode} />
-        <FAQ theme={theme} darkMode={darkMode} />
-        <CTA theme={theme} darkMode={darkMode} />
-        <Footer theme={theme} darkMode={darkMode} />
+        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Hero darkMode={darkMode} />
+        <HowItWorks darkMode={darkMode} />
+        <Features darkMode={darkMode} />
+        <Approach darkMode={darkMode} />
+        <FAQ darkMode={darkMode} />
+        <CTA darkMode={darkMode} />
+        <Footer darkMode={darkMode} />
     </div>
     </FormProvider>
   );
 };
 
 export default BizGuardAILandingPage;
-
-
-
 
 
