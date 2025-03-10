@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useForm } from './contexts/FormContext';
 
 // Header Component
 const Header = ({ theme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { setShowWaitlistModal } = useForm();
 
   return (
     <header className="flex w-full items-center bg-white">
@@ -78,6 +80,7 @@ const Header = ({ theme }) => {
             </div>
             <div className="hidden justify-end pr-16 sm:flex lg:pr-0">
               <button
+                onClick={() => setShowWaitlistModal(true)}
                 className={`rounded-lg bg-orange-500 px-7 py-3 text-base font-medium text-white hover:bg-opacity-90`}
               >
                 Join Waitlist
@@ -92,6 +95,8 @@ const Header = ({ theme }) => {
 
 // Hero Section Component
 const Hero = ({ theme }) => {
+  const { setShowWaitlistModal, setShowSubscribeModal } = useForm();
+
   return (
     <section id="home" className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px]">
       <div className="container mx-auto">
@@ -105,10 +110,16 @@ const Hero = ({ theme }) => {
                 Experience an AI accountant that learns, collaborates, and executes tasks through natural voice interactions and an intuitive interface—all while ensuring complete data security and securely handling sensitive information.
               </p>
               <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <button className="rounded-lg bg-orange-500 px-8 py-4 text-base font-medium text-white hover:bg-opacity-90">
+                <button 
+                  onClick={() => setShowWaitlistModal(true)}
+                  className="rounded-lg bg-orange-500 px-8 py-4 text-base font-medium text-white hover:bg-opacity-90"
+                >
                   Join Our Exclusive Waitlist
                 </button>
-                <button className={`rounded-lg px-8 py-4 text-base font-medium border border-gray-300 hover:bg-gray-100 ${theme === 'black' ? 'text-black' : `text-${theme}-600`}`}>
+                <button 
+                  onClick={() => setShowSubscribeModal(true)}
+                  className={`rounded-lg px-8 py-4 text-base font-medium border border-gray-300 hover:bg-gray-100 ${theme === 'black' ? 'text-black' : `text-${theme}-600`}`}
+                >
                   Subscribe for Updates
                 </button>
               </div>
@@ -610,6 +621,8 @@ const FAQ = ({ theme }) => {
 
 // CTA Section Component
 const CTA = ({ theme }) => {
+  const { setShowWaitlistModal, setShowSubscribeModal } = useForm();
+
   return (
     <section id="cta" className="py-16 md:py-20 lg:py-28">
       <div className="container mx-auto">
@@ -622,10 +635,16 @@ const CTA = ({ theme }) => {
               Join our exclusive waitlist today to receive updates and be the first to experience the future of accounting with BizGuard AI.
             </p>
             <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <button className="w-full rounded-lg bg-orange-500 px-8 py-4 text-base font-medium text-white hover:bg-opacity-90 sm:w-auto">
+              <button 
+                onClick={() => setShowWaitlistModal(true)}
+                className="w-full rounded-lg bg-orange-500 px-8 py-4 text-base font-medium text-white hover:bg-opacity-90 sm:w-auto"
+              >
                 Join Our Exclusive Waitlist
               </button>
-              <button className="w-full rounded-lg bg-white px-8 py-4 text-base font-medium text-gray-900 hover:bg-opacity-90 sm:w-auto">
+              <button 
+                onClick={() => setShowSubscribeModal(true)}
+                className="w-full rounded-lg bg-white px-8 py-4 text-base font-medium text-gray-900 hover:bg-opacity-90 sm:w-auto"
+              >
                 Subscribe for Updates
               </button>
             </div>
