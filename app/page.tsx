@@ -11,10 +11,6 @@ import { useForm } from "./contexts/FormContext";
 import { FormProvider } from "./contexts/FormContext";
 
 // ----- HEADER -----
-interface ThemeProps {
-  theme: string;
-  darkMode: boolean;
-}
 
 const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void }> = ({ darkMode, setDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -430,11 +426,9 @@ Outcome: A human-like AI that performs tasks accurately and efficiently, reducin
 
 // ----- FEATURES SECTION -----
 const Features: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
-  const [ref, isInView] = useInView<HTMLElement>();
   
   return (
     <section 
-      ref={ref}
       className={`py-16 md:py-20 lg:py-28 ${darkMode ? "bg-gray-800" : "bg-gray-50"}`}
     >
       <div className="container mx-auto px-4">

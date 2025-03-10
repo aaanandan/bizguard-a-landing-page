@@ -1,12 +1,22 @@
 import React, { createContext, useContext, useState } from 'react';
 
+interface FormData {
+  name: string;
+  email: string;
+  phone?: string;
+  profession?: string;
+  businessName?: string;
+  businessDescription?: string;
+  // ... add other form fields as needed
+}
+
 interface FormContextType {
   submitStatus: 'idle' | 'loading' | 'success' | 'error';
   showWaitlistModal: boolean;
   setShowWaitlistModal: (show: boolean) => void;
   showSubscribeModal: boolean;
   setShowSubscribeModal: (show: boolean) => void;
-  handleFormSubmit: (data: any) => Promise<void>;
+  handleFormSubmit: (data: FormData) => Promise<void>;
   handleSubscribeSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
@@ -17,7 +27,7 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: FormData) => {
     try {
       setSubmitStatus('loading');
       const response = await fetch('/api/submit', {

@@ -620,7 +620,7 @@ const FAQ = ({ theme }) => {
 };
 
 // CTA Section Component
-const CTA = ({ theme }) => {
+const CTA = () => {
   const { setShowWaitlistModal, setShowSubscribeModal } = useForm();
 
   return (

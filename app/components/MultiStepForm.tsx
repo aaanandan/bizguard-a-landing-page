@@ -4,7 +4,7 @@ import { useState } from "react";
 interface MultiStepFormProps {
   darkMode: boolean;
   onClose: () => void;
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: FormData) => Promise<void>;
 }
 
 interface FormData {
@@ -77,7 +77,7 @@ const ThankYouMessage: React.FC<{ darkMode: boolean }> = ({ darkMode }) => (
     </div>
     <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
     <p className={`mb-4 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-      We've received your information and will be in touch soon.
+      We&apos;ve received your information and will be in touch soon.
     </p>
     <div className="animate-bounce">
       <i className="fas fa-envelope text-3xl text-orange-500"></i>
@@ -102,7 +102,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const updateFormData = (data: Partial<FormData>) => {
     setFormData(prev => ({ ...prev, ...data }));
@@ -120,37 +119,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
       onClose();
     }, 3000);
   };
-
-  const ButtonWithTooltip: React.FC<{
-    onClick: () => void;
-    icon: string;
-    label: string;
-    isSelected: boolean;
-    tooltipText: string;
-  }> = ({ onClick, icon, label, isSelected, tooltipText }) => (
-    <div className="relative">
-      <button
-        onClick={onClick}
-        onMouseEnter={() => setHoveredButton(label)}
-        onMouseLeave={() => setHoveredButton(null)}
-        className={`w-full p-4 rounded-lg border transition-all ${
-          isSelected
-            ? 'border-orange-500 bg-orange-50 dark:bg-orange-900'
-            : `${darkMode ? 'border-gray-700 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'}`
-        }`}
-      >
-        <i className={`fas ${icon} text-2xl mb-2 ${
-          isSelected ? 'text-orange-500' : ''
-        }`}></i>
-        <p className="text-sm">{label}</p>
-      </button>
-      {hoveredButton === label && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap">
-          {tooltipText}
-        </div>
-      )}
-    </div>
-  );
 
   const renderStep = () => {
     switch (step) {
@@ -522,10 +490,10 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
                     onChange={(e) => updateFormData({ interestedInCustomization: e.target.checked })}
                     className="form-checkbox h-5 w-5 text-orange-500"
                   />
-                  <span>I'm interested in providing suggestions for free BizGuard customization</span>
+                  <span>I&apos;m interested in providing suggestions for free BizGuard customization</span>
                 </label>
                 <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 bottom-full left-0 mb-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap">
-                  Help shape BizGuard's features and get early access benefits!
+                  Help shape BizGuard&apos;s features and get early access benefits!
                 </div>
               </div>
             </div>
