@@ -59,12 +59,12 @@ const ageGroups = [
   { id: '56+', label: '56+ years' }
 ];
 
-const LoadingSpinner = () => (
-  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-  </svg>
-);
+// const LoadingSpinner = () => (
+//   <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+//     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+//     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+//   </svg>
+// );
 
 const ThankYouMessage: React.FC<{ darkMode: boolean }> = ({ darkMode }) => (
   <motion.div
@@ -100,7 +100,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
     email: '',
     company: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const updateFormData = (data: Partial<FormData>) => {
@@ -111,9 +111,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
   const prevStep = () => setStep(prev => prev - 1);
 
   const handleSubmit = async () => {
-    setIsSubmitting(true);
+    // setIsSubmitting(true);
     await onSubmit(formData);
-    setIsSubmitting(false);
+    // setIsSubmitting(false);
     setIsSubmitted(true);
     setTimeout(() => {
       onClose();
@@ -242,7 +242,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
               </div>
             </div>
 
-            <div className="flex justify-between mt-6">
+            {/* <div className="flex justify-between mt-6">
               <button
                 onClick={onClose}
                 className={`px-4 py-2 rounded-lg ${
@@ -260,7 +260,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
               >
                 Next
               </button>
-            </div>
+            </div> */}
           </motion.div>
         );
 
@@ -349,7 +349,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
               </div>
             </div>
 
-            <div className="flex justify-between mt-4">
+            {/* <div className="flex justify-between mt-4">
               <button
                 onClick={prevStep}
                 className={`px-3 py-1.5 rounded-lg text-sm ${
@@ -367,7 +367,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
               >
                 Next
               </button>
-            </div>
+            </div> */}
           </motion.div>
         );
 
@@ -498,7 +498,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
               </div>
             </div>
 
-            <div className="flex justify-between mt-6">
+            {/* <div className="flex justify-between mt-6">
               <button
                 onClick={prevStep}
                 className={`px-4 py-2 rounded-lg ${
@@ -521,7 +521,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ darkMode, onClose, onSubm
                   <span>Submit</span>
                 )}
               </button>
-            </div>
+            </div> */}
           </motion.div>
         );
 

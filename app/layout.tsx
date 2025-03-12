@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { inter } from './fonts'
+import { Inter } from 'next/font/google'
 import "./globals.css";
 import Script from 'next/script';
 import { GA_MEASUREMENT_ID } from './utils/gtag';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "BizGuard AI",
@@ -15,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
+    <html lang="en" className={inter.className}>
       <head>
         <link
           rel="stylesheet"

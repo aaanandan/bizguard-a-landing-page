@@ -188,7 +188,7 @@ const Header: React.FC<{ darkMode: boolean; setDarkMode: (val: boolean) => void;
                 </span>
                 <button
                   onClick={() => setDarkMode(!darkMode)}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300"
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 mb"
                 >
                   {darkMode ? (
                     <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -890,38 +890,46 @@ const CTA: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
       <Modal
         isOpen={showSubscribeModal}
         onClose={() => setShowSubscribeModal(false)}
-        title="Subscribe for Updates"
+        title={submitStatus === 'success' ? 'Thank You!' : 'Subscribe for Updates'}
         darkMode={darkMode}
       >
-        <form onSubmit={handleSubscribeSubmit} className="space-y-4">
-          <div>
-            <label className={`block mb-2 ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              className={`w-full p-2 rounded-lg border ${
-                darkMode 
-                  ? "bg-gray-700 border-gray-600 text-white" 
-                  : "bg-white border-gray-300 text-gray-900"
-              }`}
-            />
+        {submitStatus === 'success' ? (
+          <div className="text-center py-4">
+            <i className="fas fa-check-circle text-green-500 text-4xl mb-4"></i>
+            <p className={`text-lg ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
+              Thank you for subscribing! We&apos;ll keep you updated on all the latest developments.
+            </p>
           </div>
-            <button
-            type="submit"
-            disabled={submitStatus === 'loading'}
-            className={`w-full p-3 rounded-lg bg-orange-500 text-white font-medium
-              ${submitStatus === 'loading' ? 'opacity-70 cursor-not-allowed' : 'hover:bg-orange-600'}
-            `}
-          >
-            {submitStatus === 'loading' ? 'Submitting...' : 
-             submitStatus === 'success' ? 'Success!' : 
-             submitStatus === 'error' ? 'Try Again' : 
-             'Subscribe'}
-          </button>
-        </form>
+        ) : (
+          <form onSubmit={handleSubscribeSubmit} className="space-y-4">
+            <div>
+              <label className={`block mb-2 ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                required
+                className={`w-full p-2 rounded-lg border ${
+                  darkMode 
+                    ? "bg-gray-700 border-gray-600 text-white" 
+                    : "bg-white border-gray-300 text-gray-900"
+                }`}
+              />
+            </div>
+              <button
+              type="submit"
+              disabled={submitStatus === 'loading'}
+              className={`w-full p-3 rounded-lg bg-orange-500 text-white font-medium
+                ${submitStatus === 'loading' ? 'opacity-70 cursor-not-allowed' : 'hover:bg-orange-600'}
+              `}
+            >
+              {submitStatus === 'loading' ? 'Submitting...' : 
+               submitStatus === 'error' ? 'Try Again' : 
+               'Subscribe'}
+            </button>
+          </form>
+        )}
       </Modal>
     </section>
   );
@@ -1001,38 +1009,46 @@ const Hero: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
       <Modal
         isOpen={showSubscribeModal}
         onClose={() => setShowSubscribeModal(false)}
-        title="Subscribe for Updates"
+        title={submitStatus === 'success' ? 'Thank You!' : 'Subscribe for Updates'}
         darkMode={darkMode}
       >
-        <form onSubmit={handleSubscribeSubmit} className="space-y-4">
-    <div>
-            <label className={`block mb-2 ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              className={`w-full p-2 rounded-lg border ${
-                darkMode 
-                  ? "bg-gray-700 border-gray-600 text-white" 
-                  : "bg-white border-gray-300 text-gray-900"
-              }`}
-            />
-    </div>
-            <button
-            type="submit"
-            disabled={submitStatus === 'loading'}
-            className={`w-full p-3 rounded-lg bg-orange-500 text-white font-medium
-              ${submitStatus === 'loading' ? 'opacity-70 cursor-not-allowed' : 'hover:bg-orange-600'}
-            `}
-          >
-            {submitStatus === 'loading' ? 'Submitting...' : 
-             submitStatus === 'success' ? 'Success!' : 
-             submitStatus === 'error' ? 'Try Again' : 
-             'Subscribe'}
-          </button>
-        </form>
+        {submitStatus === 'success' ? (
+          <div className="text-center py-4">
+            <i className="fas fa-check-circle text-green-500 text-4xl mb-4"></i>
+            <p className={`text-lg ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
+              Thank you for subscribing! We&apos;ll keep you updated on all the latest developments.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubscribeSubmit} className="space-y-4">
+            <div>
+              <label className={`block mb-2 ${darkMode ? "text-gray-200" : "text-gray-700"}`}>
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                required
+                className={`w-full p-2 rounded-lg border ${
+                  darkMode 
+                    ? "bg-gray-700 border-gray-600 text-white" 
+                    : "bg-white border-gray-300 text-gray-900"
+                }`}
+              />
+            </div>
+              <button
+              type="submit"
+              disabled={submitStatus === 'loading'}
+              className={`w-full p-3 rounded-lg bg-orange-500 text-white font-medium
+                ${submitStatus === 'loading' ? 'opacity-70 cursor-not-allowed' : 'hover:bg-orange-600'}
+              `}
+            >
+              {submitStatus === 'loading' ? 'Submitting...' : 
+               submitStatus === 'error' ? 'Try Again' : 
+               'Subscribe'}
+            </button>
+          </form>
+        )}
       </Modal>
     </>
   );
